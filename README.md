@@ -72,7 +72,7 @@ This section includes guidelines for testing the skin locally.
 make setup
 ```
 
-Visit http://localhost:8080 — username: `admin`, password: `UbuntuWiki2024!`
+Visit http://localhost:8080 — username: `admin`, password: `UbuntuWiki2026!`
 
 ### Clean up
 

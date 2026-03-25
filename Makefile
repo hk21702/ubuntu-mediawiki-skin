@@ -8,14 +8,14 @@ setup: LocalSettings.php
 	docker compose exec mediawiki php maintenance/run.php install \
 		--dbtype mysql --dbserver db --dbname mediawiki \
 		--dbuser mediawiki --dbpass mediawiki \
-		--pass UbuntuWiki2024! \
+		--pass UbuntuWiki2026! \
 		"Ubuntu wiki" admin
 	docker compose cp LocalSettings.php mediawiki:/var/www/html/LocalSettings.php
 	@echo ""
 	@echo "Setup complete!"
 	@echo "  URL:      http://localhost:8080"
 	@echo "  Username: admin"
-	@echo "  Password: UbuntuWiki2024!"
+	@echo "  Password: UbuntuWiki2026!"
 
 deploy: LocalSettings.php
 	docker compose cp LocalSettings.php mediawiki:/var/www/html/LocalSettings.php
