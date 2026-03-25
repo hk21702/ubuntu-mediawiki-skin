@@ -1,29 +1,15 @@
-/* Apply custom styles only on login or create account pages */
-/*body.special-userlogin, */
-/*body.special-createaccount {*/
-/*    background-color: black;*/
-/*}*/
-
-/*body.special-userlogin #mw-loginform,*/
-/*body.special-createaccount #mw-createaccount-form {*/
-/*    border: 1px solid #ccc;*/
-/*    padding: 2em;*/
-/*    background-color: red;*/
-/*}*/
-
-/* load Ubuntu font */
-
+/* Load Ubuntu font */
 .mw-body, .mw-body-content, .mw-headline, .mw-heading, .mw-heading1, .mw-heading2, .mw-heading3, .mw-label, .mw-input, .mw-allpages-table-form, .mw-allpages-nav, .mw-page-title-main, h1, h2, h3, h4, h5, h6 {
 	font-family: 'Ubuntu', sans-serif !important;
 }
  
-/*remove footer elements*/
+/* Remove footer elements */
 #footer-places-privacy, #footer-places-about, #footer-places-disclaimers { display: none; }
  
-/* NOTE: Some CSS below modelled on Arch wiki source */
+/* NOTE: Some CSS below is partially modelled on the Arch wiki */
+/* Source: https://wiki.archlinux.org/title/MediaWiki:Common.css */
 
-/* Note, Warning, Tip, Doccan, Info, Inuse templates */
-
+/* Admonition templates */
 :root {
 	--ubuntu-template-note-background-color: #ddf;
 	--ubuntu-template-note-border-color: #bbd;
@@ -93,7 +79,7 @@ html.skin-theme-clientpref-night .vector-header-container a.mw-logo .mw-logo-wor
     }
 }
 
-/* --- THEME SPECIFIC OVERRIDES --- */
+/* --- THEME-SPECIFIC OVERRIDES --- */
 
 @media screen {
 	/* Manual Night Theme */
@@ -264,8 +250,6 @@ div.ubuntu-template-meta-related-articles > ul > li {
 
 /* Timeless Skin Fix */
 @media screen { dd { margin-left: 1.6em; } }
-
-/* END Migrated from global styles */
   
   /* Dark grey background for the entire header */
   .vector-header-container {
@@ -300,15 +284,12 @@ div.ubuntu-template-meta-related-articles > ul > li {
       padding: 2px 12px !important;
   }
   
-  /*TODO: wiki title */
+  /* Wiki title styles */
     .vector-header-start .mw-logo-wordmark {
-    /*position: relative;*/
-    /*top: 10px;*/
     font-weight: 300 !important; /* Light */
-    /*font-size: 28px !important;*/
   }
 
-  /* Style the logo image - larger to reduce gap */
+  /* Style the logo image */
   .mw-logo-icon {
       max-height: 46px !important;
       width: auto !important;
@@ -318,6 +299,7 @@ div.ubuntu-template-meta-related-articles > ul > li {
       position: relative !important;
       margin-top: -20px !important;
   }
+
   /* Make ends of sticky header same colour as background */
   .vector-sticky-header-container {
   	background-color: var(--background-color-neutral-subtle) !important;
@@ -333,14 +315,13 @@ div.ubuntu-template-meta-related-articles > ul > li {
       color: #919191 !important;
   }
   
-/*customise all icons*/
+/* Customize color of all icons*/
 :root {
   --vector-icon-custom-color: #919191;
   --vector-icon-hover-color: #cccccc; /* Add hover color variable */
 }
 
 /* Reduce padding around icons on hover */
-
 .vector-user-links .cdx-button--icon-only,
 #pt-watchlist-2 .cdx-button--icon-only {
     padding: 4px !important;
@@ -514,38 +495,6 @@ a.search-toggle.cdx-button--icon-only:hover {
     background: var(--vector-icon-custom-color, black);
 }
   
-  /*NOTE: trying different approach to icons*/
-/*  .vector-icon {*/
-/*    background: #ffffff !important;*/
-/*}*/
-
-/*a:hover .vector-icon, button:hover .vector-icon {*/
-/*    background: pink !important;*/
-/*}*/
-  
-
-  /* Style icons with light grey color #d0d0d0 */
-  /*.vector-header-container .vector-icon,*/
-  /*.vector-user-links .vector-icon,*/
-  /*.vector-page-tools .vector-icon {*/
-      /*opacity: 1 !important;*/
-      /*make dropdown list items readable*/
-  /*    filter: brightness(0) saturate(100%) invert(87%) sepia(0%) saturate(0%) hue-rotate(166deg) brightness(92%) contrast(89%) !important;*/
-  /*}*/
-
-  /* Icon hover state - ONLY for navbar icon items */
-  /*.vector-user-links .mw-list-item:has(.vector-icon):hover,*/
-  /*.vector-page-tools .mw-list-item:has(.vector-icon):hover {*/
-  /*    background-color: #e9e9e9 !important;*/
-      /*border-radius: 3px !important;*/
-  /*}*/
-
-  /* Make icons darker on hover */
-  /*.vector-user-links .mw-list-item:hover .vector-icon,*/
-  /*.vector-page-tools .mw-list-item:hover .vector-icon {*/
-  /*    filter: brightness(0) saturate(100%) invert(60%) sepia(0%) saturate(0%) hue-rotate(201deg) brightness(74%) contrast(89%) !important;*/
-  /*}*/
-
   /* Make main menu hover text darker */
   .vector-main-menu a:hover {
       color: #666 !important;
@@ -564,12 +513,12 @@ a.search-toggle.cdx-button--icon-only:hover {
       align-items: center !important;
   }
   
-  /*remove duplicate search icon*/
+  /* Remove duplicate search icon*/
   .cdx-button.vector-sticky-header-search-toggle {
     display: none;
   }
   
-  /*fix color of dropdown icon in personal settings menu*/
+  /* Fix color of dropdown icon in personal settings menu*/
   @supports (-webkit-mask-image:none) or (mask-image:none) {
     .vector-user-menu-logged-in .vector-dropdown-label::after {
         background-color: var(--vector-icon-custom-color);
