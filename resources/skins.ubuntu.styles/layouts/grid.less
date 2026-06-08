@@ -32,7 +32,8 @@
 	}
 
 	.vector-feature-page-tools-pinned-enabled .vector-column-end,
-	.vector-feature-appearance-pinned-clientpref-1 .vector-column-end {
+	.vector-feature-appearance-pinned-clientpref-1 .vector-column-end,
+	.vector-feature-toc-pinned-clientpref-1 .vector-column-end {
 		width: @width-column-desktop;
 	}
 
@@ -66,14 +67,16 @@
 	}
 
 	.vector-feature-page-tools-pinned-enabled .vector-column-end,
-	.vector-feature-appearance-pinned-clientpref-1 .vector-column-end {
+	.vector-feature-appearance-pinned-clientpref-1 .vector-column-end,
+	.vector-feature-toc-pinned-clientpref-1 .vector-column-end {
 		width: @width-column-desktop-wide;
 	}
 }
 
-// Single column grid when column start is empty (i.e. no pinned ToC or pinned main menu)
+// Single column grid when column start is empty (i.e. no pinned main menu)
 .vector-feature-main-menu-pinned-disabled.vector-toc-not-available .mw-page-container-inner,
-.vector-feature-main-menu-pinned-disabled.vector-feature-toc-pinned-clientpref-0 .mw-page-container-inner {
+.vector-feature-main-menu-pinned-disabled.vector-feature-toc-pinned-clientpref-0 .mw-page-container-inner,
+.vector-feature-main-menu-pinned-disabled.vector-feature-toc-pinned-clientpref-1 .mw-page-container-inner {
 	grid-template-columns: @width-page-content;
 	// stylelint-disable-next-line @stylistic/declaration-colon-space-after
 	grid-template-areas:
