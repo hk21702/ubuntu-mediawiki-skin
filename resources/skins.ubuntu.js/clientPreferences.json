@@ -5,14 +5,6 @@
 		"linkLabelUrl": "wp25eastereggs-enable-learn-more-link-url",
 		"preferenceKey": "wp25eastereggs-enable"
 	},
-	"vector-feature-custom-font-size": {
-		"options": [ "0", "1", "2" ],
-		"preferenceKey": "vector-font-size"
-	},
-	"vector-feature-limited-width": {
-		"options": [ "1", "0" ],
-		"preferenceKey": "vector-limited-width"
-	},
 	"skin-theme": {
 		"options": [ "os", "day", "night" ],
 		"preferenceKey": "vector-theme",
