@@ -1,10 +1,13 @@
 // TOC styles when unpinned
 .mixin-toc-unpinned() {
-	margin-right: @spacing-50;
+	margin-left: @spacing-50;
 
 	.vector-dropdown-content {
 		// Override default dropdown max width
 		max-width: none;
+		// Anchor to right edge of button so dropdown doesn't overflow off-screen
+		left: auto;
+		right: 0;
 	}
 
 	// Shared unpinned TOC styles, applies across all unpinned cases (page titlebar, sticky header, floating)
