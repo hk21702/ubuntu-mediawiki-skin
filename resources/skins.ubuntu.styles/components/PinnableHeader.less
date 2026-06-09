@@ -47,5 +47,16 @@
 		.vector-pinnable-header-pinned .vector-pinnable-header-unpin-button {
 			display: inline-block;
 		}
+
+		// ToC and main menu are permanently pinned; suppress their unpin buttons.
+		.vector-toc-pinnable-header.vector-pinnable-header-pinned .vector-pinnable-header-unpin-button,
+		.vector-main-menu-pinnable-header.vector-pinnable-header-pinned .vector-pinnable-header-unpin-button {
+			display: none;
+		}
+
+		// Tools is permanently unpinned; suppress its pin button.
+		.vector-page-tools-pinnable-header .vector-pinnable-header-pin-button {
+			display: none;
+		}
 	}
 }
