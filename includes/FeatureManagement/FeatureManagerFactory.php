@@ -198,7 +198,6 @@ class FeatureManagerFactory {
 			Constants::FEATURE_MAIN_MENU_PINNED,
 			[
 				Constants::REQUIREMENT_FULLY_INITIALISED,
-				Constants::REQUIREMENT_LOGGED_IN,
 				Constants::REQUIREMENT_MAIN_MENU_PINNED
 			]
 		);

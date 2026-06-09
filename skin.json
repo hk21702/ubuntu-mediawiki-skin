@@ -126,7 +126,7 @@
 	"DefaultUserOptions": {
 		"vector-limited-width": 1,
 		"vector-page-tools-pinned": 0,
-		"vector-main-menu-pinned": 0,
+		"vector-main-menu-pinned": 1,
 		"vector-toc-pinned": 1,
 		"vector-appearance-pinned": 0,
 		"vector-font-size": 0,
