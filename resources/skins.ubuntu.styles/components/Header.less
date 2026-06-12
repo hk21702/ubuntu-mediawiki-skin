@@ -10,12 +10,20 @@
 		display: flex;
 		align-items: center;
 		gap: 20px;
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			width: @width-column-desktop;
+		}
+
+		@media ( min-width: @min-width-breakpoint-desktop-wide ) {
+			width: @width-column-desktop-wide;
+		}
 	}
 
 	.vector-header-search {
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: left;
 	}
 
 	.vector-search-box {
