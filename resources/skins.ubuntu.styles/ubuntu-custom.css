@@ -32,77 +32,132 @@ h6 {
 
 /* Admonition templates */
 :root {
-	--ubuntu-template-note-background-color: #ddf;
-	--ubuntu-template-note-border-color: #bbd;
-	--ubuntu-template-note-background-color-dark: #17193f;
-	--ubuntu-template-note-border-color-dark: #3c3d61;
+	--ubuntu-template-note-border-color: #1a4d80;
 
-	--ubuntu-template-warning-background-color: #fdd;
-	--ubuntu-template-warning-border-color: #fc7e7e;
-	--ubuntu-template-warning-background-color-dark: #390009;
-	--ubuntu-template-warning-border-color-dark: #5d3033;
+	--ubuntu-template-warning-border-color: #cc7900;
 
-	--ubuntu-template-tip-background-color: #dfd;
-	--ubuntu-template-tip-border-color: #bdb;
-	--ubuntu-template-tip-background-color-dark: #002400;
-	--ubuntu-template-tip-border-color-dark: #003400;
+	--ubuntu-template-tip-border-color: #0e8420;
 
-	--ubuntu-template-doccan-background-color: #F4AA90;
-	--ubuntu-template-doccan-border-color: #000000;
-	--ubuntu-template-doccan-background-color-dark: #ED764D;
-	--ubuntu-template-doccan-border-color-dark: #000000;
+	--ubuntu-template-doccan-border-color: #0e8420;
 
-	--ubuntu-template-info-background-color: #e7f3ff;
-	--ubuntu-template-info-border-color: #bbd9f7;
-	--ubuntu-template-info-background-color-dark: #0e2a47;
-	--ubuntu-template-info-border-color-dark: #1a4d80;
+	--ubuntu-template-info-border-color: #1a4d80;
 
-	--ubuntu-template-inuse-background-color: #fff4e7;
-	--ubuntu-template-inuse-border-color: #f7d9bb;
-	--ubuntu-template-inuse-background-color-dark: #472a0e;
-	--ubuntu-template-inuse-border-color-dark: #804d1a;
+	--ubuntu-template-danger-border-color: #c7162b;
 
-	--ubuntu-template-message-background-color: #f9faff;
 	--ubuntu-template-message-border-color: #d7dfe3;
-	--ubuntu-template-message-background-color-dark: #000105;
-	--ubuntu-template-message-border-color-dark: #1b2327;
 }
 
 div.ubuntu-template-box {
-	padding: 0.5em;
-	border: thin solid black;
-	margin: 0.5em 0;
+	position: relative;
+	padding: calc(0.5rem - 1px) 1rem calc(0.5rem - 1px) 3rem;
+	border: 1.5px solid var(--ubuntu-template-box-border-color, rgba(0, 0, 0, 0.2));
+	margin-bottom: 1.5rem;
+	margin-top: 0;
 	overflow: hidden;
 }
 
-div.ubuntu-template-box.ubuntu-template-box-note {
-	background-color: var(--ubuntu-template-note-background-color);
-	border-color: var(--ubuntu-template-note-border-color);
+/* Left accent bar */
+div.ubuntu-template-box::before {
+	content: "";
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	bottom: -1px;
+	width: 0.1875rem;
+	z-index: 1;
 }
 
-div.ubuntu-template-box.ubuntu-template-box-warning {
-	background-color: var(--ubuntu-template-warning-background-color);
-	border-color: var(--ubuntu-template-warning-border-color);
+/* Alignment of icon and text */
+
+div.ubuntu-template-box > p {
+	margin: 0;
 }
 
-div.ubuntu-template-box.ubuntu-template-box-tip {
-	background-color: var(--ubuntu-template-tip-background-color);
-	border-color: var(--ubuntu-template-tip-border-color);
+div.ubuntu-template-box::after {
+	content: "";
+	position: absolute;
+	left: 1rem;
+	top: calc(0.5rem - 1px);
+	width: 1rem;
+	height: 1.5rem;
+	height: 1lh;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 1rem;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-position: center;
+	-webkit-mask-size: 1rem;
+	mask-size: 1rem;
 }
 
-div.ubuntu-template-box.ubuntu-template-box-doccan {
-	background-color: var(--ubuntu-template-doccan-background-color);
-	border-color: var(--ubuntu-template-doccan-border-color);
+/* Accent bar colour per type */
+div.ubuntu-template-box.ubuntu-template-box-note::before {
+	background-color: var(--ubuntu-template-note-border-color);
 }
 
-div.ubuntu-template-box.ubuntu-template-box-info {
-	background-color: var(--ubuntu-template-info-background-color);
-	border-color: var(--ubuntu-template-info-border-color);
+div.ubuntu-template-box.ubuntu-template-box-warning::before {
+	background-color: var(--ubuntu-template-warning-border-color);
 }
 
-div.ubuntu-template-box.ubuntu-template-box-inuse {
-	background-color: var(--ubuntu-template-inuse-background-color);
-	border-color: var(--ubuntu-template-inuse-border-color);
+div.ubuntu-template-box.ubuntu-template-box-tip::before {
+	background-color: var(--ubuntu-template-tip-border-color);
+}
+
+div.ubuntu-template-box.ubuntu-template-box-doccan::before {
+	background-color: var(--ubuntu-template-doccan-border-color);
+}
+
+div.ubuntu-template-box.ubuntu-template-box-info::before {
+	background-color: var(--ubuntu-template-info-border-color);
+}
+
+div.ubuntu-template-box.ubuntu-template-box-danger::before {
+	background-color: var(--ubuntu-template-danger-border-color);
+}
+
+/* Icons masked so they tint to the accent colour */
+div.ubuntu-template-box.ubuntu-template-box-note::after,
+div.ubuntu-template-box.ubuntu-template-box-info::after {
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg width='16' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1a7 7 0 110 14A7 7 0 018 1zm0 1.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM8.75 7v5.02h-1.5V7h1.5zM8.5 3.944a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1a.5.5 0 01.5-.5h1z' fill='%23000' fill-rule='nonzero'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg width='16' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1a7 7 0 110 14A7 7 0 018 1zm0 1.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM8.75 7v5.02h-1.5V7h1.5zM8.5 3.944a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1a.5.5 0 01.5-.5h1z' fill='%23000' fill-rule='nonzero'/%3E%3C/svg%3E");
+}
+
+div.ubuntu-template-box.ubuntu-template-box-tip::after {
+	-webkit-mask-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTggMWE1IDUgMCAwMTMuMDAxIDlMMTEgMTJhMyAzIDAgMDEtNiAwdi0yYTUgNSAwIDAxMy05em0xLjM3IDExLjYxMUg2LjYzYTEuNSAxLjUgMCAwMDIuNzQgMHpNOCAyLjVhMy41IDMuNSAwIDAwLTIuMSA2LjMgMS41IDEuNSAwIDAxLjU5MiAxLjA0NEw2LjUgMTB2MS4xMWgzbC4wMDEtMS4xMTFBMS41IDEuNSAwIDAxMTAuMSA4LjggMy41IDMuNSAwIDAwOCAyLjV6TTYuMzkxIDYuNDNMOCA3LjI2NWwxLjYyMy0uODI3LjY4MSAxLjMzNy0yLjMxIDEuMTc3LTIuMjkyLTEuMTg5LjY5LTEuMzMxeicgZmlsbD0nIzAwMCcgIGZpbGwtcnVsZT0nbm9uemVybycvPjwvc3ZnPg==");
+	mask-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTggMWE1IDUgMCAwMTMuMDAxIDlMMTEgMTJhMyAzIDAgMDEtNiAwdi0yYTUgNSAwIDAxMy05em0xLjM3IDExLjYxMUg2LjYzYTEuNSAxLjUgMCAwMDIuNzQgMHpNOCAyLjVhMy41IDMuNSAwIDAwLTIuMSA2LjMgMS41IDEuNSAwIDAxLjU5MiAxLjA0NEw2LjUgMTB2MS4xMWgzbC4wMDEtMS4xMTFBMS41IDEuNSAwIDAxMTAuMSA4LjggMy41IDMuNSAwIDAwOCAyLjV6TTYuMzkxIDYuNDNMOCA3LjI2NWwxLjYyMy0uODI3LjY4MSAxLjMzNy0yLjMxIDEuMTc3LTIuMjkyLTEuMTg5LjY5LTEuMzMxeicgZmlsbD0nIzAwMCcgIGZpbGwtcnVsZT0nbm9uemVybycvPjwvc3ZnPg==");
+}
+
+div.ubuntu-template-box.ubuntu-template-box-doccan::after {
+	-webkit-mask-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTggLjQ5NmwyLjA1MyAxLjg2MyAyLjc3LS4xMDguMzc2IDIuNzQ3IDIuMTkxIDEuNjk5LTEuNDc4IDIuMzQ1LjU4NyAyLjcxLTIuNjQuODQ3LTEuMjkyIDIuNDUzTDggMTQuMDAzbC0yLjU2NyAxLjA0OS0xLjI5Mi0yLjQ1My0yLjY0LS44NDcuNTg3LTIuNzFMLjYxIDYuNjk3IDIuOCA0Ljk5OGwuMzc1LTIuNzQ3IDIuNzcuMTA4TDggLjQ5NnpNOCAyLjUyTDYuNSAzLjg4MWwtMi4wMjItLjA3OC0uMjc0IDIuMDA1LTEuNjAxIDEuMjQgMS4wOCAxLjcxMy0uNDI4IDEuOTc4IDEuOTI4LjYxOS45NDMgMS43OUw4IDEyLjM4M2wxLjg3My43NjUuOTQ0LTEuNzkgMS45MjctLjYxOS0uNDI4LTEuOTc4IDEuMDgtMS43MTMtMS42LTEuMjQtLjI3NS0yLjAwNS0yLjAyMi4wNzhMOCAyLjUyem0xLjg5OSAyLjgzNWwxLjIwNy44OS0zLjcyNyA1LjA2LTIuNjYtMi4zNTMuOTk0LTEuMTIzIDEuNDMxIDEuMjY1IDIuNzU1LTMuNzM5eicgZmlsbD0nIzAwMCcgIGZpbGwtcnVsZT0nbm9uemVybycvPjwvc3ZnPg==");
+	mask-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTggLjQ5NmwyLjA1MyAxLjg2MyAyLjc3LS4xMDguMzc2IDIuNzQ3IDIuMTkxIDEuNjk5LTEuNDc4IDIuMzQ1LjU4NyAyLjcxLTIuNjQuODQ3LTEuMjkyIDIuNDUzTDggMTQuMDAzbC0yLjU2NyAxLjA0OS0xLjI5Mi0yLjQ1My0yLjY0LS44NDcuNTg3LTIuNzFMLjYxIDYuNjk3IDIuOCA0Ljk5OGwuMzc1LTIuNzQ3IDIuNzcuMTA4TDggLjQ5NnpNOCAyLjUyTDYuNSAzLjg4MWwtMi4wMjItLjA3OC0uMjc0IDIuMDA1LTEuNjAxIDEuMjQgMS4wOCAxLjcxMy0uNDI4IDEuOTc4IDEuOTI4LjYxOS45NDMgMS43OUw4IDEyLjM4M2wxLjg3My43NjUuOTQ0LTEuNzkgMS45MjctLjYxOS0uNDI4LTEuOTc4IDEuMDgtMS43MTMtMS42LTEuMjQtLjI3NS0yLjAwNS0yLjAyMi4wNzhMOCAyLjUyem0xLjg5OSAyLjgzNWwxLjIwNy44OS0zLjcyNyA1LjA2LTIuNjYtMi4zNTMuOTk0LTEuMTIzIDEuNDMxIDEuMjY1IDIuNzU1LTMuNzM5eicgZmlsbD0nIzAwMCcgIGZpbGwtcnVsZT0nbm9uemVybycvPjwvc3ZnPg==");
+}
+
+div.ubuntu-template-box.ubuntu-template-box-note::after,
+div.ubuntu-template-box.ubuntu-template-box-info::after {
+	background-color: var(--ubuntu-template-note-border-color);
+}
+
+div.ubuntu-template-box.ubuntu-template-box-info::after {
+	background-color: var(--ubuntu-template-info-border-color);
+}
+
+div.ubuntu-template-box.ubuntu-template-box-tip::after {
+	background-color: var(--ubuntu-template-tip-border-color);
+}
+
+div.ubuntu-template-box.ubuntu-template-box-doccan::after {
+	background-color: var(--ubuntu-template-doccan-border-color);
+}
+
+/* Multi-colour icons: used as background images to keep their colours */
+div.ubuntu-template-box.ubuntu-template-box-warning::after {
+	background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTYnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZmlsbD0nI2NjNzkwMCcgZmlsbC1ydWxlPSdldmVub2RkJyBjbGlwLXJ1bGU9J2V2ZW5vZGQnIGQ9J005LjM0IDEuMmw1Ljg0MiAxMS42MjdBMS41IDEuNSAwIDAxMTMuODQyIDE1SDIuMTU4YTEuNSAxLjUgMCAwMS0xLjM0LTIuMTczTDYuNjYgMS4yYTEuNSAxLjUgMCAwMTIuNjggMHpNOC41IDExYS41LjUgMCAwMS40OTIuNDFMOSAxMS41djFhLjUuNSAwIDAxLS40MS40OTJMOC41IDEzaC0xYS41LjUgMCAwMS0uNDkyLS40MUw3IDEyLjV2LTFhLjUuNSAwIDAxLjQxLS40OTJMNy41IDExaDF6TTkgNXY0LjVIN1Y1aDJ6Jy8+PC9zdmc+");
+}
+
+div.ubuntu-template-box.ubuntu-template-box-danger::after {
+	background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNicgaGVpZ2h0PScxNicgdmlld0JveD0nMCAwIDE2IDE2Jz48cGF0aCBmaWxsPScjYzcxNjJiJyBmaWxsLXJ1bGU9J2V2ZW5vZGQnIGNsaXAtcnVsZT0nZXZlbm9kZCcgZD0nTTEgOGE3IDcgMCAxIDEgMTQgMEE3IDcgMCAwIDEgMSA4TTkgOC41VjRIN3Y0LjV6bS0uMDA4IDEuOTFBLjUuNSAwIDAgMCA4LjUgMTBoLTFsLS4wOS4wMDhBLjUuNSAwIDAgMCA3IDEwLjV2MWwuMDA4LjA5QS41LjUgMCAwIDAgNy41IDEyaDFsLjA5LS4wMDhBLjUuNSAwIDAgMCA5IDExLjV2LTF6Jy8+PC9zdmc+");
 }
 
 /* --- LOGO WORDMARK COLOR LOGIC --- */
@@ -134,35 +189,9 @@ html.skin-theme-clientpref-night .vector-header-container a.mw-logo .mw-logo-wor
 		--background-color-neutral-subtle: #131416;
 	}
 
-	html.skin-theme-clientpref-night body.skin-vector-2022 {
-		& div.ubuntu-template-box.ubuntu-template-box-note {
-			background-color: var(--ubuntu-template-note-background-color-dark);
-			border-color: var(--ubuntu-template-note-border-color-dark);
-		}
-
-		& div.ubuntu-template-box.ubuntu-template-box-warning {
-			background-color: var(--ubuntu-template-warning-background-color-dark);
-			border-color: var(--ubuntu-template-warning-border-color-dark);
-		}
-
-		& div.ubuntu-template-box.ubuntu-template-box-tip {
-			background-color: var(--ubuntu-template-tip-background-color-dark);
-			border-color: var(--ubuntu-template-tip-border-color-dark);
-		}
-
-		& div.ubuntu-template-box.ubuntu-template-box-doccan {
-			background-color: var(--ubuntu-template-doccan-background-color-dark);
-			border-color: var(--ubuntu-template-doccan-border-color-dark);
-		}
-
-		& div.ubuntu-template-box.ubuntu-template-box-info {
-			background-color: var(--ubuntu-template-info-background-color-dark);
-			border-color: var(--ubuntu-template-info-border-color-dark);
-		}
-
-		& div.ubuntu-template-box.ubuntu-template-box-inuse {
-			background-color: var(--ubuntu-template-inuse-background-color-dark);
-			border-color: var(--ubuntu-template-inuse-border-color-dark);
+	html.skin-theme-clientpref-night body.skin-ubuntu {
+		& div.ubuntu-template-box {
+			border-color: rgba(255, 255, 255, 0.25);
 		}
 
 		& div.ubuntu-template-message {
@@ -178,35 +207,9 @@ html.skin-theme-clientpref-night .vector-header-container a.mw-logo .mw-logo-wor
 			--background-color-neutral-subtle: #131416;
 		}
 
-		html.skin-theme-clientpref-os body.skin-vector-2022 {
-			& div.ubuntu-template-box.ubuntu-template-box-note {
-				background-color: var(--ubuntu-template-note-background-color-dark);
-				border-color: var(--ubuntu-template-note-border-color-dark);
-			}
-
-			& div.ubuntu-template-box.ubuntu-template-box-warning {
-				background-color: var(--ubuntu-template-warning-background-color-dark);
-				border-color: var(--ubuntu-template-warning-border-color-dark);
-			}
-
-			& div.ubuntu-template-box.ubuntu-template-box-tip {
-				background-color: var(--ubuntu-template-tip-background-color-dark);
-				border-color: var(--ubuntu-template-tip-border-color-dark);
-			}
-
-			& div.ubuntu-template-box.ubuntu-template-box-doccan {
-				background-color: var(--ubuntu-template-doccan-background-color-dark);
-				border-color: var(--ubuntu-template-doccan-border-color-dark);
-			}
-
-			& div.ubuntu-template-box.ubuntu-template-box-info {
-				background-color: var(--ubuntu-template-info-background-color-dark);
-				border-color: var(--ubuntu-template-info-border-color-dark);
-			}
-
-			& div.ubuntu-template-box.ubuntu-template-box-inuse {
-				background-color: var(--ubuntu-template-inuse-background-color-dark);
-				border-color: var(--ubuntu-template-inuse-border-color-dark);
+		html.skin-theme-clientpref-os body.skin-ubuntu {
+			& div.ubuntu-template-box {
+				border-color: rgba(255, 255, 255, 0.25);
 			}
 
 			& div.ubuntu-template-message {
