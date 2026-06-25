@@ -23,7 +23,9 @@ function init( config, userPreferences ) {
 
 	function updateAriaLabel( currentValue ) {
 		const msgKey = nextThemeMessageKey[ currentValue ] || 'skin-theme-toggle-label';
-		button.setAttribute( 'aria-label', mw.msg( msgKey ) );
+		const msg = mw.msg( msgKey );
+		button.setAttribute( 'aria-label', msg );
+		button.setAttribute( 'title', msg );
 	}
 
 	updateAriaLabel( String( mw.user.clientPrefs.get( featureName ) ) );
