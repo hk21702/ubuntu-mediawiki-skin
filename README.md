@@ -43,8 +43,8 @@ $wgDefaultSkin = 'ubuntu';
 
 # Logo — uses the Ubuntu logo bundled in the skin.
 $wgLogos = [
-	'1x'   => "$wgResourceBasePath/skins/Ubuntu/resources/images/ubuntu-logo.png",
-	'icon' => "$wgResourceBasePath/skins/Ubuntu/resources/images/ubuntu-logo.png",
+	'1x'   => "$wgResourceBasePath/skins/Ubuntu/resources/images/Tag-CoF-Orange-Digital.svg",
+	'icon' => "$wgResourceBasePath/skins/Ubuntu/resources/images/Tag-CoF-Orange-Digital.svg",
 ];
 
 # Enable dark mode for all users
@@ -138,6 +138,6 @@ These are set in `skin.json` under `DefaultUserOptions` and apply to new users o
 #### Bundled Assets
 
 - `resources/fonts/` — 4 Ubuntu Sans variable font files (latin + latin-ext, all weights and styles)
-- `resources/images/ubuntu-logo.png` — Ubuntu logo for the header
+- `resources/images/Tag-CoF-Orange-Digital.svg` — Ubuntu logo for the header
 - `resources/skins.ubuntu.styles/ubuntu-custom.css` — all custom CSS overrides
 - `resources/skins.ubuntu.styles/ubuntu-fonts.css` — `@font-face` declarations for self-hosted fonts
