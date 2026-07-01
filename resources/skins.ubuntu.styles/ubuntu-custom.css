@@ -32,6 +32,8 @@ h6 {
 
 /* Admonition templates */
 :root {
+	--ubuntu-menu-text-color: #646464;
+
 	--ubuntu-template-note-border-color: #1a4d80;
 
 	--ubuntu-template-warning-border-color: #cc7900;
@@ -187,6 +189,7 @@ html.skin-theme-clientpref-night .vector-header-container a.mw-logo .mw-logo-wor
 	html.skin-theme-clientpref-night {
 		--background-color-base: #131416;
 		--background-color-neutral-subtle: #131416;
+		--ubuntu-menu-text-color: #aea79f;
 	}
 
 	html.skin-theme-clientpref-night body.skin-ubuntu {
@@ -209,6 +212,7 @@ html.skin-theme-clientpref-night .vector-header-container a.mw-logo .mw-logo-wor
 		html.skin-theme-clientpref-os {
 			--background-color-base: #131416;
 			--background-color-neutral-subtle: #131416;
+			--ubuntu-menu-text-color: #aea79f;
 		}
 
 		html.skin-theme-clientpref-os body.skin-ubuntu {
@@ -413,6 +417,28 @@ div.ubuntu-template-meta-related-articles>ul>li {
 .vector-header-container {
 	background-color: #333;
 	gap: 0 !important;
+	--vector-icon-custom-color: #ffffff;
+	color: #ffffff;
+}
+
+.vector-header-container .cdx-button--weight-quiet:hover,
+.vector-header-container .cdx-button--fake-button--enabled:hover,
+.vector-header-container .vector-dropdown-label:hover,
+.vector-header-container input:hover + .cdx-button--weight-quiet {
+	--background-color-button-quiet-hover: transparent;
+	--background-color-interactive: transparent;
+	background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.vector-header-container a,
+.vector-header-container a:visited {
+	color: #ffffff !important;
+}
+
+/* Dropdown panels have their own backgrounds; reset inherited header white */
+.vector-dropdown-content,
+.vector-dropdown-content .vector-menu-heading {
+	color: var( --color-base, #202122 );
 }
 
 /*Colour area around header container*/
@@ -489,21 +515,30 @@ div.ubuntu-template-meta-related-articles>ul>li {
 	background-color: var(--background-color-neutral-subtle) !important;
 }
 
-/* Username and dropdown text - use #919191 for visibility on both backgrounds */
-.vector-user-links>.mw-list-item>a,
-.vector-user-links>.mw-list-item>.vector-user-menu-logged-in>a,
+/* Username and dropdown text */
 .vector-dropdown-content a,
-.vector-menu-content a,
-.vector-menu-content-list a,
 .vector-user-menu .vector-menu-content a {
-	color: #919191 !important;
+	color: var(--ubuntu-menu-text-color) !important;
 }
+
+/* Page action tabs (Read, Edit, View history, etc.) use regular text color */
+.vector-menu-tabs .vector-menu-content a,
+.vector-menu-tabs .vector-menu-content-list a {
+	color: inherit !important;
+}
+
 
 /* Customize color of all icons*/
 :root {
 	--vector-icon-custom-color: #919191;
 	--vector-icon-hover-color: #cccccc;
 	/* Add hover color variable */
+}
+
+/* Personal and logout dropdown menu icons match menu text color */
+#p-personal,
+#p-user-menu-logout {
+	--vector-icon-custom-color: var(--ubuntu-menu-text-color);
 }
 
 /* Reduce padding around icons on hover */
@@ -601,6 +636,13 @@ a.search-toggle.cdx-button--icon-only:hover {
 
 .vector-icon.mw-ui-icon-wikimedia-unStar {
 	background: var(--vector-icon-custom-color, #919191);
+}
+
+/* Watch/unwatch star icons in page toolbar use regular text color */
+.vector-page-toolbar-container .vector-icon.mw-ui-icon-wikimedia-star,
+.vector-page-toolbar-container .vector-icon.mw-ui-icon-wikimedia-halfStar,
+.vector-page-toolbar-container .vector-icon.mw-ui-icon-wikimedia-unStar {
+	background: var(--color-base, #202122) !important;
 }
 
 .vector-icon.mw-ui-icon-wikimedia-expand {
@@ -709,6 +751,11 @@ a.search-toggle.cdx-button--icon-only:hover {
 	.vector-user-menu-logged-in .vector-dropdown-label::after {
 		background-color: var(--vector-icon-custom-color);
 	}
+}
+
+/* Search input placeholder text and icon */
+#simpleSearch .cdx-text-input__input::placeholder {
+	color: #646464;
 }
 
 /* Ubuntu Mono for code elements */
