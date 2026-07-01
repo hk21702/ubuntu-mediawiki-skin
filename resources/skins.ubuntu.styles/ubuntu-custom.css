@@ -435,6 +435,12 @@ div.ubuntu-template-meta-related-articles>ul>li {
 	color: #ffffff !important;
 }
 
+/* Dropdown panels have their own backgrounds; reset inherited header white */
+.vector-dropdown-content,
+.vector-dropdown-content .vector-menu-heading {
+	color: var( --color-base, #202122 );
+}
+
 /*Colour area around header container*/
 .vector-header {
 	background-color: #333 !important;
