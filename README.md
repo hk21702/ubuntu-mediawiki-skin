@@ -11,21 +11,7 @@ This is a modified version of the Vector-2022 skin for use in the upcoming Ubunt
 
 ### Install via Composer
 
-Add the following to your wiki's `composer.local.json`:
-
-```json
-{
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/ubuntu/ubuntu-mediawiki-skin"
-		}
-	],
-	"require": {
-		"ubuntu/mediawiki-ubuntu-skin": "dev-main"
-	}
-}
-```
+Add the skin to your [composer.local.json](composer.local.json) file.
 
 Then run:
 
@@ -35,25 +21,7 @@ composer update
 
 ### Configure
 
-Add the following to `LocalSettings.php`:
-
-```php
-wfLoadSkin( 'Ubuntu' );
-$wgDefaultSkin = 'ubuntu';
-
-# Logo — uses the Ubuntu logo bundled in the skin.
-$wgLogos = [
-	'1x'   => "$wgResourceBasePath/skins/Ubuntu/resources/images/Tag-CoF-Orange-Digital.svg",
-	'icon' => "$wgResourceBasePath/skins/Ubuntu/resources/images/Tag-CoF-Orange-Digital.svg",
-];
-
-# Enable dark mode for all users
-$wgUbuntuNightMode = [
-	'beta'       => false,
-	'logged_in'  => true,
-	'logged_out' => true,
-];
-```
+See [LocalSettings.example.php](LocalSettings.example.php) for an example of how to configure the skin in your `LocalSettings.php`.
 
 ---
 
