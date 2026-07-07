@@ -31,8 +31,7 @@ class Hooks implements
 		private readonly Config $config,
 		private readonly UserOptionsManager $userOptionsManager,
 		private readonly FeatureManagerFactory $featureManagerFactory,
-	) {
-	}
+	) {}
 
 	/**
 	 * Checks if the current skin is a variant of Vector
@@ -40,7 +39,8 @@ class Hooks implements
 	 * @param string $skinName
 	 * @return bool
 	 */
-	private static function isVectorSkin( string $skinName ): bool {
+	private static function isVectorSkin(string $skinName): bool
+	{
 		return (
 			$skinName === Constants::SKIN_NAME_LEGACY ||
 			$skinName === Constants::SKIN_NAME_MODERN ||
@@ -62,14 +62,14 @@ class Hooks implements
 	): array {
 		$additionalSearchOptions = [
 			'highlightQuery' =>
-				VectorServices::getLanguageService()->canWordsBeSplitSafely( $context->getLanguage() )
+			VectorServices::getLanguageService()->canWordsBeSplitSafely($context->getLanguage())
 		];
 
-		$hookRunner = new HookRunner( MediaWikiServices::getInstance()->getHookContainer() );
-		$hookRunner->onVectorSearchResourceLoaderConfig( $additionalSearchOptions );
+		$hookRunner = new HookRunner(MediaWikiServices::getInstance()->getHookContainer());
+		$hookRunner->onVectorSearchResourceLoaderConfig($additionalSearchOptions);
 
-		$vectorTypeahead = $config->get( 'UbuntuTypeahead' );
-		$vectorTypeahead['options'] = array_merge( $vectorTypeahead['options'], $additionalSearchOptions );
+		$vectorTypeahead = $config->get('UbuntuTypeahead');
+		$vectorTypeahead['options'] = array_merge($vectorTypeahead['options'], $additionalSearchOptions);
 		return $vectorTypeahead;
 	}
 
@@ -88,7 +88,7 @@ class Hooks implements
 		array &$config
 	): void {
 		// It's better to exit before any additional check
-		if ( !self::isVectorSkin( $context->getSkin() ) ) {
+		if (!self::isVectorSkin($context->getSkin())) {
 			return;
 		}
 		// Tell the `mediawiki.page.ready` module not to wire up search.
@@ -106,20 +106,21 @@ class Hooks implements
 	 * @internal used inside Hooks::onSkinTemplateNavigation
 	 * @param array &$content_navigation
 	 */
-	private static function updateActionsMenu( &$content_navigation ) {
+	private static function updateActionsMenu(&$content_navigation)
+	{
 		$key = null;
-		if ( isset( $content_navigation['actions']['watch'] ) ) {
+		if (isset($content_navigation['actions']['watch'])) {
 			$key = 'watch';
 		}
-		if ( isset( $content_navigation['actions']['unwatch'] ) ) {
+		if (isset($content_navigation['actions']['unwatch'])) {
 			$key = 'unwatch';
 		}
 
 		// Promote watch link from actions to views and add an icon
 		// The second check to isset is pointless but shuts up phan.
-		if ( $key !== null && isset( $content_navigation['actions'][ $key ] ) ) {
+		if ($key !== null && isset($content_navigation['actions'][$key])) {
 			$content_navigation['views'][$key] = $content_navigation['actions'][$key];
-			unset( $content_navigation['actions'][$key] );
+			unset($content_navigation['actions'][$key]);
 		}
 	}
 
@@ -130,26 +131,27 @@ class Hooks implements
 	 * @param array &$content_navigation
 	 * @param bool $isLegacy is this the legacy Vector skin?
 	 */
-	private static function updateViewsMenuIcons( &$content_navigation, $isLegacy ) {
-		foreach ( $content_navigation['views'] as &$item ) {
+	private static function updateViewsMenuIcons(&$content_navigation, $isLegacy)
+	{
+		foreach ($content_navigation['views'] as &$item) {
 			$icon = $item['icon'] ?? null;
-			if ( $icon ) {
-				if ( $isLegacy ) {
+			if ($icon) {
+				if ($isLegacy) {
 					self::appendClassToItem(
 						$item['class'],
-						[ 'icon' ]
+						['icon']
 					);
 				} else {
 					// Force the item as a button with hidden text.
 					$item['button'] = true;
 					$item['text-hidden'] = true;
-					$item = self::updateMenuItemData( $item, false );
+					$item = self::updateMenuItemData($item, false);
 				}
-			} elseif ( !$isLegacy ) {
+			} elseif (!$isLegacy) {
 				// The vector-tab-noicon class is only used in Vector-22.
 				self::appendClassToItem(
 					$item['class'],
-					[ 'vector-tab-noicon' ]
+					['vector-tab-noicon']
 				);
 			}
 		}
@@ -161,11 +163,12 @@ class Hooks implements
 	 * @internal used inside Hooks::onSkinTemplateNavigation
 	 * @param array &$content_navigation
 	 */
-	private static function updateAssociatedPagesMenuIcons( &$content_navigation ) {
-		foreach ( $content_navigation['associated-pages'] as &$item ) {
+	private static function updateAssociatedPagesMenuIcons(&$content_navigation)
+	{
+		foreach ($content_navigation['associated-pages'] as &$item) {
 			self::appendClassToItem(
 				$item['class'],
-				[ 'vector-tab-noicon' ]
+				['vector-tab-noicon']
 			);
 		}
 	}
@@ -176,24 +179,25 @@ class Hooks implements
 	 * @param array|string &$item to update
 	 * @param array|string $classes to add to the item
 	 */
-	private static function appendClassToItem( &$item, $classes ) {
+	private static function appendClassToItem(&$item, $classes)
+	{
 		$existingClasses = $item;
 
-		if ( is_array( $existingClasses ) ) {
+		if (is_array($existingClasses)) {
 			// Treat as array
-			$newArrayClasses = is_array( $classes ) ? $classes : [ trim( $classes ) ];
-			$item = array_merge( $existingClasses, $newArrayClasses );
-		} elseif ( is_string( $existingClasses ) ) {
+			$newArrayClasses = is_array($classes) ? $classes : [trim($classes)];
+			$item = array_merge($existingClasses, $newArrayClasses);
+		} elseif (is_string($existingClasses)) {
 			// Treat as string
-			$newStrClasses = is_string( $classes ) ? trim( $classes ) : implode( ' ', $classes );
+			$newStrClasses = is_string($classes) ? trim($classes) : implode(' ', $classes);
 			$item .= ' ' . $newStrClasses;
 		} else {
 			// Treat as whatever $classes is
 			$item = $classes;
 		}
 
-		if ( is_string( $item ) ) {
-			$item = trim( $item );
+		if (is_string($item)) {
+			$item = trim($item);
 		}
 	}
 
@@ -202,8 +206,9 @@ class Hooks implements
 	 * @param array $content_navigation
 	 * @return bool
 	 */
-	private static function isReadingListEnabled( $content_navigation ) {
-		return isset( $content_navigation['user-menu']['readinglists'] );
+	private static function isReadingListEnabled($content_navigation)
+	{
+		return isset($content_navigation['user-menu']['readinglists']);
 	}
 
 	/**
@@ -211,8 +216,9 @@ class Hooks implements
 	 * @param array $content_navigation
 	 * @return bool
 	 */
-	private static function isWatchListEnabled( $content_navigation ) {
-		return isset( $content_navigation['user-menu']['watchlist'] );
+	private static function isWatchListEnabled($content_navigation)
+	{
+		return isset($content_navigation['user-menu']['watchlist']);
 	}
 
 	/**
@@ -225,69 +231,70 @@ class Hooks implements
 	 * @param array &$content_navigation
 	 * @suppress PhanTypeInvalidDimOffset
 	 */
-	private static function updateUserLinksDropdownItems( $sk, &$content_navigation ) {
+	private static function updateUserLinksDropdownItems($sk, &$content_navigation)
+	{
 		// For logged-in users in modern Vector, rearrange some links in the personal toolbar.
 		$user = $sk->getUser();
-		if ( $user->isRegistered() ) {
+		if ($user->isRegistered()) {
 			// Remove user page from personal menu dropdown for logged in use
 			// Note check that the user page exists as it wont for temporary users
-			if ( isset( $content_navigation['user-menu']['userpage'] ) ) {
+			if (isset($content_navigation['user-menu']['userpage'])) {
 				$content_navigation['user-menu']['userpage']['collapsible'] = true;
 			}
 			// watchlist may be disabled if $wgGroupPermissions['*']['viewmywatchlist'] = false;
 			// See [[phab:T299671]]
-			if ( self::isReadingListEnabled( $content_navigation ) ) {
+			if (self::isReadingListEnabled($content_navigation)) {
 				$content_navigation['user-menu']['readinglists']['collapsible'] = true;
 			}
-			if ( self::isWatchlistEnabled( $content_navigation ) ) {
+			if (self::isWatchlistEnabled($content_navigation)) {
 				$content_navigation['user-menu']['watchlist']['collapsible'] = true;
 			}
 
 			// Anon editor links handled manually in new anon editor menu
 			$logoutMenu = [];
-			if ( isset( $content_navigation['user-menu']['logout'] ) ) {
+			if (isset($content_navigation['user-menu']['logout'])) {
 				$logoutMenu['logout'] = $content_navigation['user-menu']['logout'];
 				$logoutMenu['logout']['id'] = 'pt-logout';
-				unset( $content_navigation['user-menu']['logout'] );
+				unset($content_navigation['user-menu']['logout']);
 			}
 			$content_navigation['user-menu-logout'] = $logoutMenu;
 
-			self::updateMenuItems( $content_navigation, 'user-menu', false );
-			self::updateMenuItems( $content_navigation, 'user-menu-logout' );
+			self::updateMenuItems($content_navigation, 'user-menu', false);
+			self::updateMenuItems($content_navigation, 'user-menu-logout');
 		} else {
 			// Remove "Not logged in" from personal menu dropdown for anon users.
-			unset( $content_navigation['user-menu']['anonuserpage'] );
+			unset($content_navigation['user-menu']['anonuserpage']);
 
 			// Make login and create account collapsible
-			if ( isset( $content_navigation['user-menu']['login'] ) ) {
+			if (isset($content_navigation['user-menu']['login'])) {
 				$content_navigation['user-menu']['login']['collapsible'] = true;
 			}
-			if ( isset( $content_navigation['user-menu']['login-private'] ) ) {
+			if (isset($content_navigation['user-menu']['login-private'])) {
 				$content_navigation['user-menu']['login-private']['collapsible'] = true;
 			}
-			if ( isset( $content_navigation['user-menu']['createaccount'] ) ) {
+			if (isset($content_navigation['user-menu']['createaccount'])) {
 				$content_navigation['user-menu']['createaccount']['collapsible'] = true;
 			}
-			if ( isset( $content_navigation['user-menu']['sitesupport'] ) ) {
+			if (isset($content_navigation['user-menu']['sitesupport'])) {
 				$content_navigation['user-menu']['sitesupport']['collapsible'] = true;
 			}
 
 			// Anon editor links handled manually in new anon editor menu
 			$anonEditorMenu = [];
-			if ( isset( $content_navigation['user-menu']['anoncontribs'] ) ) {
+			if (isset($content_navigation['user-menu']['anoncontribs'])) {
 				$anonEditorMenu['anoncontribs'] = $content_navigation['user-menu']['anoncontribs'];
 				$anonEditorMenu['anoncontribs']['id'] = 'pt-anoncontribs';
-				unset( $content_navigation['user-menu']['anoncontribs'] );
+				unset($content_navigation['user-menu']['anoncontribs']);
 			}
-			if ( isset( $content_navigation['user-menu']['anontalk'] ) ) {
+			if (isset($content_navigation['user-menu']['anontalk'])) {
 				$anonEditorMenu['anontalk'] = $content_navigation['user-menu']['anontalk'];
 				$anonEditorMenu['anontalk']['id'] = 'pt-anontalk';
-				unset( $content_navigation['user-menu']['anontalk'] );
+				unset($content_navigation['user-menu']['anontalk']);
 			}
 			$content_navigation['user-menu-anon-editor'] = $anonEditorMenu;
 
 			// Only show icons for anon menu items (login and create account).
-			self::updateMenuItems( $content_navigation, 'user-menu' );
+			self::updateMenuItems($content_navigation, 'user-menu');
 		}
 	}
 
@@ -297,17 +304,18 @@ class Hooks implements
 	 *
 	 * @param array &$content_navigation
 	 */
-	private static function fixEcho( &$content_navigation ) {
-		if ( isset( $content_navigation['notifications'] ) ) {
-			foreach ( $content_navigation['notifications'] as &$item ) {
+	private static function fixEcho(&$content_navigation)
+	{
+		if (isset($content_navigation['notifications'])) {
+			foreach ($content_navigation['notifications'] as &$item) {
 				$icon = $item['icon'] ?? null;
-				if ( $icon ) {
+				if ($icon) {
 					$linkClass = $item['link-class'] ?? [];
 					$newLinkClass = [
 						// Allows Echo to react to clicks
 						'mw-echo-notification-badge-nojs'
 					];
-					if ( in_array( 'mw-echo-unseen-notifications', $linkClass ) ) {
+					if (in_array('mw-echo-unseen-notifications', $linkClass)) {
 						$newLinkClass[] = 'mw-echo-unseen-notifications';
 					}
 					$item['link-class'] = $newLinkClass;
@@ -325,15 +333,16 @@ class Hooks implements
 	 * @param SkinTemplate $sk
 	 * @param array &$content_navigation
 	 */
-	private static function updateUserLinksItems( $sk, &$content_navigation ) {
+	private static function updateUserLinksItems($sk, &$content_navigation)
+	{
 		$skinName = $sk->getSkinName();
-		if ( self::isSkinVersionLegacy( $skinName ) ) {
+		if (self::isSkinVersionLegacy($skinName)) {
 			// Remove user page from personal toolbar since it will be inside the personal menu for logged-in
 			// users in legacy Vector.
-			unset( $content_navigation['user-page'] );
+			unset($content_navigation['user-page']);
 		} else {
-			self::fixEcho( $content_navigation );
-			self::updateUserLinksDropdownItems( $sk, $content_navigation );
+			self::fixEcho($content_navigation);
+			self::updateUserLinksDropdownItems($sk, $content_navigation);
 		}
 	}
 
@@ -344,9 +353,10 @@ class Hooks implements
 	 * @param array &$item
 	 * @param string $prefix defaults to user-links-
 	 */
-	private static function makeMenuItemCollapsible( array &$item, string $prefix = 'user-links-' ) {
+	private static function makeMenuItemCollapsible(array &$item, string $prefix = 'user-links-')
+	{
 		$collapseMenuItemClass = $prefix . 'collapsible-item';
-		self::appendClassToItem( $item[ 'class' ], $collapseMenuItemClass );
+		self::appendClassToItem($item['class'], $collapseMenuItemClass);
 	}
 
 	/**
@@ -356,7 +366,8 @@ class Hooks implements
 	 * @param string $name
 	 * @return string of HTML
 	 */
-	private static function makeIcon( $name ) {
+	private static function makeIcon($name)
+	{
 		// Html::makeLink will pass this through rawElement
 		return '<span class="vector-icon mw-ui-icon-' . $name . ' mw-ui-icon-wikimedia-' . $name . '"></span>';
 	}
@@ -372,37 +383,40 @@ class Hooks implements
 	 * @return array $item Updated data
 	 */
 	private static function updateItemData(
-		$item, $buttonClassProp, $iconHtmlProp, $unsetIcon = true
+		$item,
+		$buttonClassProp,
+		$iconHtmlProp,
+		$unsetIcon = true
 	) {
 		$hasButton = $item['button'] ?? false;
 		$hideText = $item['text-hidden'] ?? false;
 		$isCollapsible = $item['collapsible'] ?? false;
 		$icon = $item['icon'] ?? '';
-		if ( $unsetIcon ) {
-			unset( $item['icon'] );
+		if ($unsetIcon) {
+			unset($item['icon']);
 		}
-		unset( $item['button'] );
-		unset( $item['text-hidden'] );
-		unset( $item['collapsible'] );
+		unset($item['button']);
+		unset($item['text-hidden']);
+		unset($item['collapsible']);
 
-		if ( $isCollapsible ) {
-			self::makeMenuItemCollapsible( $item );
+		if ($isCollapsible) {
+			self::makeMenuItemCollapsible($item);
 		}
-		if ( $hasButton ) {
+		if ($hasButton) {
 			// Hardcoded button classes, this should be fixed by replacing Hooks.php with VectorComponentButton.php
-			self::appendClassToItem( $item[ $buttonClassProp ], [
+			self::appendClassToItem($item[$buttonClassProp], [
 				'cdx-button',
 				'cdx-button--fake-button',
 				'cdx-button--fake-button--enabled',
 				'cdx-button--weight-quiet'
-			] );
+			]);
 		}
-		if ( $icon ) {
-			if ( $hideText && $hasButton ) {
-				self::appendClassToItem( $item[ $buttonClassProp ], [ 'cdx-button--icon-only' ] );
+		if ($icon) {
+			if ($hideText && $hasButton) {
+				self::appendClassToItem($item[$buttonClassProp], ['cdx-button--icon-only']);
 			}
 
-			$item[ $iconHtmlProp ] = self::makeIcon( $icon );
+			$item[$iconHtmlProp] = self::makeIcon($icon);
 		}
 		return $item;
 	}
@@ -415,10 +429,11 @@ class Hooks implements
 	 * @param bool $unsetIcon should the icon field be unset?
 	 * @return array $item Updated menu item data
 	 */
-	private static function updateMenuItemData( $item, $unsetIcon = true ) {
+	private static function updateMenuItemData($item, $unsetIcon = true)
+	{
 		$buttonClassProp = 'link-class';
 		$iconHtmlProp = 'link-html';
-		return self::updateItemData( $item, $buttonClassProp, $iconHtmlProp, $unsetIcon );
+		return self::updateItemData($item, $buttonClassProp, $iconHtmlProp, $unsetIcon);
 	}
 
 	/**
@@ -428,9 +443,10 @@ class Hooks implements
 	 * @param string $menu identifier
 	 * @param bool $unsetIcon should the icon field be unset?
 	 */
-	private static function updateMenuItems( &$content_navigation, $menu, $unsetIcon = true ) {
-		foreach ( $content_navigation[$menu] as &$item ) {
-			$item = self::updateMenuItemData( $item, $unsetIcon );
+	private static function updateMenuItems(&$content_navigation, $menu, $unsetIcon = true)
+	{
+		foreach ($content_navigation[$menu] as &$item) {
+			$item = self::updateMenuItemData($item, $unsetIcon);
 		}
 	}
 
@@ -447,9 +463,10 @@ class Hooks implements
 	 *
 	 * @param array &$content_navigation
 	 */
-	private static function createMoreOverflowMenu( &$content_navigation ) {
+	private static function createMoreOverflowMenu(&$content_navigation)
+	{
 		$clonedViews = [];
-		foreach ( $content_navigation['views'] ?? [] as $key => $item ) {
+		foreach ($content_navigation['views'] ?? [] as $key => $item) {
 			$newItem = $item;
 			self::makeMenuItemCollapsible(
 				$newItem,
@@ -471,33 +488,34 @@ class Hooks implements
 	 * @param SkinTemplate $sk
 	 * @param array &$content_navigation
 	 */
-	public static function onSkinTemplateNavigation( $sk, &$content_navigation ) {
+	public static function onSkinTemplateNavigation($sk, &$content_navigation)
+	{
 		$skinName = $sk->getSkinName();
 		// These changes should only happen in Vector.
-		if ( !$skinName || !self::isVectorSkin( $skinName ) ) {
+		if (!$skinName || !self::isVectorSkin($skinName)) {
 			return;
 		}
 
 		$title = $sk->getRelevantTitle();
 		if (
-			$sk->getConfig()->get( 'UbuntuUseIconWatch' ) &&
+			$sk->getConfig()->get('UbuntuUseIconWatch') &&
 			$title && $title->canExist() &&
 			// Only move the watchstar if bookmark not detected
 			// T402352
-			!self::isReadingListEnabled( $content_navigation )
+			!self::isReadingListEnabled($content_navigation)
 		) {
-			self::updateActionsMenu( $content_navigation );
+			self::updateActionsMenu($content_navigation);
 		}
 
-		self::updateUserLinksItems( $sk, $content_navigation );
-		if ( $skinName === Constants::SKIN_NAME_MODERN || $skinName === Constants::SKIN_NAME_UBUNTU ) {
-			self::createMoreOverflowMenu( $content_navigation );
+		self::updateUserLinksItems($sk, $content_navigation);
+		if ($skinName === Constants::SKIN_NAME_MODERN || $skinName === Constants::SKIN_NAME_UBUNTU) {
+			self::createMoreOverflowMenu($content_navigation);
 		}
 
 		// The updating of the views menu happens /after/ the overflow menu has been created
 		// this avoids icons showing in the more overflow menu.
-		self::updateViewsMenuIcons( $content_navigation, self::isSkinVersionLegacy( $skinName ) );
-		self::updateAssociatedPagesMenuIcons( $content_navigation );
+		self::updateViewsMenuIcons($content_navigation, self::isSkinVersionLegacy($skinName));
+		self::updateAssociatedPagesMenuIcons($content_navigation);
 	}
 
 	/**
@@ -506,14 +524,15 @@ class Hooks implements
 	 * @param User $user User whose preferences are being modified.
 	 * @param array[] &$prefs Preferences description array, to be fed to a HTMLForm object.
 	 */
-	public function onGetPreferences( $user, &$prefs ): void {
+	public function onGetPreferences($user, &$prefs): void
+	{
 		$vectorPrefs = [
 			Constants::PREF_KEY_LIMITED_WIDTH => [
 				'type' => 'toggle',
 				'label-message' => 'vector-prefs-limited-width',
 				'section' => 'rendering/skin/skin-prefs',
 				'help-message' => 'vector-prefs-limited-width-help',
-				'hide-if' => [ '!==', 'skin', Constants::SKIN_NAME_MODERN ],
+				'hide-if' => ['!==', 'skin', Constants::SKIN_NAME_MODERN],
 			],
 			Constants::PREF_KEY_FONT_SIZE => [
 				'type' => 'select',
@@ -524,7 +543,7 @@ class Hooks implements
 					'vector-feature-custom-font-size-1-label' => '1',
 					'vector-feature-custom-font-size-2-label' => '2',
 				],
-				'hide-if' => [ '!==', 'skin', Constants::SKIN_NAME_MODERN ],
+				'hide-if' => ['!==', 'skin', Constants::SKIN_NAME_MODERN],
 			],
 			Constants::PREF_KEY_PAGE_TOOLS_PINNED => [
 				'type' => 'api'
@@ -548,7 +567,7 @@ class Hooks implements
 					'skin-theme-night-label' => 'night',
 					'skin-theme-os-label' => 'os',
 				],
-				'hide-if' => [ '!==', 'skin', Constants::SKIN_NAME_MODERN ],
+				'hide-if' => ['!==', 'skin', Constants::SKIN_NAME_MODERN],
 			],
 		];
 		$prefs += $vectorPrefs;
@@ -560,9 +579,10 @@ class Hooks implements
 	 * @param User $user Newly created user object.
 	 * @param bool $isAutoCreated
 	 */
-	public function onLocalUserCreated( $user, $isAutoCreated ) {
-		$default = $this->config->get( Constants::CONFIG_KEY_DEFAULT_SKIN_VERSION_FOR_NEW_ACCOUNTS );
-		if ( $default ) {
+	public function onLocalUserCreated($user, $isAutoCreated)
+	{
+		$default = $this->config->get(Constants::CONFIG_KEY_DEFAULT_SKIN_VERSION_FOR_NEW_ACCOUNTS);
+		if ($default) {
 			$this->userOptionsManager->setOption(
 				$user,
 				Constants::PREF_KEY_SKIN,
@@ -579,7 +599,8 @@ class Hooks implements
 	 * @param string $skinName hint that can be used to detect modern vector.
 	 * @return bool
 	 */
-	private static function isSkinVersionLegacy( $skinName ): bool {
+	private static function isSkinVersionLegacy($skinName): bool
+	{
 		return $skinName === Constants::SKIN_NAME_LEGACY;
 	}
 }

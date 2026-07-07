@@ -71,12 +71,15 @@
 						"associated-pages"
 					],
 					"scripts": [
-						"skins.ubuntu.js"
+						"skins.ubuntu.js",
+						"skins.ubuntu.cookieConsent.vendor",
+						"skins.ubuntu.cookieConsent"
 					],
 					"styles": [
 						"skins.ubuntu.search.codex.styles",
 						"skins.ubuntu.styles",
-						"skins.ubuntu.icons"
+						"skins.ubuntu.icons",
+						"skins.ubuntu.cookieConsent.styles"
 					],
 					"messages": [
 						"tooltip-p-logo",
@@ -418,6 +421,45 @@
 				"mediawiki.page.ready",
 				"mediawiki.util"
 			]
+		},
+		"skins.ubuntu.cookieConsent.styles": {
+			"styles": [
+				"resources/skins.ubuntu.cookieConsent/vendor/cookie-policy.css"
+			],
+			"noflip": true
+		},
+		"skins.ubuntu.cookieConsent.vendor": {
+			"packageFiles": [
+				"resources/skins.ubuntu.cookieConsent/cookieConsent-vendor.js",
+				{
+					"name": "resources/skins.ubuntu.cookieConsent/config.json",
+					"config": [
+						"UbuntuCookieConsentEnabled"
+					]
+				},
+				{
+					"name": "resources/skins.ubuntu.cookieConsent/vendor/cookie-policy.js",
+					"file": "resources/skins.ubuntu.cookieConsent/vendor/cookie-policy.js",
+					"type": "text"
+				}
+			]
+		},
+		"skins.ubuntu.cookieConsent": {
+			"packageFiles": [
+				"resources/skins.ubuntu.cookieConsent/cookieConsent.js",
+				{
+					"name": "resources/skins.ubuntu.cookieConsent/config.json",
+					"config": [
+						"UbuntuCookieConsentEnabled"
+					]
+				}
+			],
+			"dependencies": [
+				"skins.ubuntu.cookieConsent.vendor"
+			],
+			"messages": [
+				"ubuntu-manage-trackers-button-label"
+			]
 		}
 	},
 	"ResourceFileModulePaths": {
@@ -594,6 +636,10 @@
 		"UbuntuTableOfContentsCollapseAtCount": {
 			"value": 28,
 			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
+		},
+		"UbuntuCookieConsentEnabled": {
+			"value": false,
+			"description": "@var bool Enable the Canonical cookie policy consent banner. When enabled, loads the cookie-policy library which sets Google Consent Mode v2 defaults to denied and displays a consent dialog. The footer 'Manage your tracker settings' button (added via SkinAddFooterLinks hook in LocalSettings.php) allows users to reconfigure consent."
 		}
 	},
 	"ServiceWiringFiles": [
